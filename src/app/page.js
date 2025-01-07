@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Dropdown } from "./components/dropdown";
+import { translate } from "./actions/translate";
 
 const languageOptions = [
   {
@@ -40,7 +41,12 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <form>
+        <form
+          action={async (formData) => {
+            const result = await translate(formData);
+            setTranslatedText(result.translation);
+          }}
+        >
           <div className="flex flex-row gap-4">
             <div className="container flex flex-col">
               <Dropdown
@@ -53,6 +59,7 @@ export default function Home() {
                 placeholder="Enter text to translate"
                 className="border border-slate-800 rounded-md p-4 lg:w-[400px] "
                 value={inputText}
+                name="text"
                 onChange={handleInputChange}
               />
             </div>
@@ -74,7 +81,7 @@ export default function Home() {
           </div>
           <button
             type="submit"
-            className="p-2 rounded-md bg-slate-800 text-white"
+            className="p-2 mt-3 rounded-md bg-slate-800 text-white"
           >
             translate
           </button>
