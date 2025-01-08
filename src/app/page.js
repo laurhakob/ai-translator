@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Dropdown } from "./components/dropdown";
 import { translate } from "./actions/translate";
+import VoiceRecorder from "./components/voice-recorder";
 
 const languageOptions = [
   {
@@ -36,6 +37,16 @@ export default function Home() {
   const handleInputChange = (e) => {
     const newText = e.target.value;
     setInputText(newText);
+  };
+
+  const handleInputSet = async (value) => {
+    setInputText(value);
+    const formData = new FormData();
+    formData.append("text", value);
+    formData.append("languageTo", languageTo);
+    formData.append("languageFrom", languageFrom);
+    const translation = await translate(formData);
+    setTranslatedText(translation.translation);
   };
 
   return (
@@ -79,12 +90,17 @@ export default function Home() {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="p-2 mt-3 rounded-md bg-slate-800 text-white"
-          >
-            translate
-          </button>
+          <div className="flex flex-row items-center gap-2 h-16">
+            <button
+              type="submit"
+              className="p-2 rounded-md bg-slate-800 text-white"
+            >
+              translate
+            </button>
+            {languageFrom === "en" && (
+              <VoiceRecorder handleSetText={handleInputSet} />
+            )}
+          </div>
         </form>
       </main>
     </div>
