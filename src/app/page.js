@@ -63,7 +63,7 @@ export default function Home() {
         </h1>
         <p className="mt-4 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
           Break language barriers instantly with our powerful translation app.
-          Try it now!
+          Try it now!!
         </p>
       </div>
       <div className="bg-white shadow-xl rounded-lg p-6 max-w-3xl mx-auto">
